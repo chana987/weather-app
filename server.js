@@ -6,7 +6,7 @@ const port = process.env.SERVER_PORT || 3000
 const bodyParser = require("body-parser")
 const mongoose = require("mongoose")
 
-mongoose.connect("mongodb://localhost/citiesDB", {
+mongoose.connect("mongodb://localhost/weatherDB", {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
 	useFindAndModify: false
