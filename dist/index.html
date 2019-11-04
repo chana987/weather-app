@@ -10,26 +10,34 @@
 	<body>
 		<div class="container">
 			<div class="searchbar">
-				<input type="text" name="" id="city-input" class="city-input" placeholder="Enter city and country">
-				<button type="submit">Find</button>
+				<input
+					type="text"
+					name=""
+					class="city-input"
+					placeholder="Enter city and country"
+				/>
+				<button type="submit" class="find-city">Find</button>
 			</div>
-			<div class="cities">
-
-			</div>
+			<div class="cities"></div>
 		</div>
 
 		<script id="city-template" type="text/x-handlebars-template">
-			{{#each cities}}
+			{{#each allCityData}}
 			<div class="city">
+				<button class="save-city">0</button>
+				<button class="remove-city">1</button>
 				<p class="city_name">{{name}}</p>
-				<p class="city_temperature">{{temperature}}</p>
+				<p class="city_temperature">{{temp}}</p>
 				<p class="city_condition">{{condition}}</p>
-				<img src="{{icon}}" alt="">
+				<img src="http://openweathermap.org/img/wn/{{icon}}@2x.png" alt="">
 			</div>
 			{{/each}}
 		</script>
+
 		<script src="./jquery/dist/jquery.js"></script>
 		<script src="./handlebars/dist/handlebars.js"></script>
+		<script src="TempManager.js"></script>
+		<script src="Renderer.js"></script>
 		<script src="main.js"></script>
 	</body>
 </html>

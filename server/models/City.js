@@ -2,10 +2,12 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const citySchema = new Schema({
+    id: Number,
     name: { type: String, required: true },
-    temperature: Number,
+    temp: Number,
+    country: String,
     condition: String,
-    conditionIcon: String
+    icon: String
 })
 
 const City = mongoose.model("city", citySchema)

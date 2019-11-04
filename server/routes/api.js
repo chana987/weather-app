@@ -8,11 +8,23 @@ const City = require('../models/City')
 
 router.get('/city/:cityName', async function (req, res) {
     let data = await requestPromise(`http://api.openweathermap.org/data/2.5/find?q=${req.params.cityName}&units=metric&APPID=${weatherApiKey}`)
+    let cityData = JSON.parse(data).list[0]
     try {
-        res.send(JSON.parse(data).list)
-        throw new Error("We can't seem to find this city, please check spelling")
+        if (cityData) {
+            let city = { 
+                id: cityData.id,
+                name: cityData.name,
+                temp: cityData.main.temp,
+                country: cityData.sys.country,
+                condition: cityData.weather[0].main,
+                icon: cityData.weather[0].icon
+            }
+            res.send(city)
+        } else {
+            throw new Error("We can't seem to find this city, please check spelling")
+        }
     } catch(e) {
-        console.log(e)
+        res.send(e)
     }
 })
 
@@ -22,22 +34,32 @@ router.get('/cities', function (req, res) {
 })
 
 router.post('/city', async function(req, res) {
-    let city = new City({ ...req.body })
-    city.save()
-    .then( res.send(`${city.name} added to database`) )
-})
-
-router.delete('/city/:cityId', function(req, res) {
     try {
-        City.findOneAndDelete({
-            name: req.params.name
-        })
-        .then(res.send(`${req.params.cityName} removed from database`))
-        throw new Error("This city is not saved")
+        if (req.body.name) {
+            let city = new City( req.body )
+            city.save()
+            .then( res.send(`${city.name} added to database`) )
+        } else {
+            throw new Error("didn't work")
+        }
     } catch(e) {
-        console.log(e)
+        res.send(e)
     }
     
+})
+
+router.delete('/city', function(req, res) {
+    console.log(req.body.city)
+    City.findOneAndDelete({
+        name: req.body.city
+    })
+    .then(res.end())
+    // try {
+        
+    //     // throw new Error("This city is not saved")
+    // } catch(e) {
+    //     res.send(e)
+    // }  
 })
 
 module.exports = router
