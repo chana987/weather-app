@@ -10,35 +10,32 @@ router.get('/city/:cityName', async function (req, res) {
     let data = await requestPromise(`http://api.openweathermap.org/data/2.5/find?q=${req.params.cityName}&units=metric&APPID=${weatherApiKey}`)
     try {
         res.send(JSON.parse(data).list)
-    } catch {
         throw new Error("We can't seem to find this city, please check spelling")
+    } catch(e) {
+        console.log(e)
     }
 })
 
 router.get('/cities', function (req, res) {
     City.find({})
-    .exec(data => res.send(data))
+    .then(data => res.send(data))
 })
 
 router.post('/city', async function(req, res) {
-    let city = new City({
-        name: req.body.name,
-        temperature: req.body.main.temp,
-        condition: req.body.weather.main,
-        conditionPic: req.body.weather.icon
-    })
+    let city = new City({ ...req.body })
     city.save()
     .then( res.send(`${city.name} added to database`) )
 })
 
-router.delete('/city/:cityName', function(req, res) {
+router.delete('/city/:cityId', function(req, res) {
     try {
         City.findOneAndDelete({
-            name: req.params.cityName
+            name: req.params.name
         })
         .then(res.send(`${req.params.cityName} removed from database`))
-    } catch {
-        res.send("This city is not saved")
+        throw new Error("This city is not saved")
+    } catch(e) {
+        console.log(e)
     }
     
 })
