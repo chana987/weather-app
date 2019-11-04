@@ -1,11 +1,11 @@
 const express = require('express')
 const router = express.Router()
 
-const Person = require('../models/Person')
+const City = require('../models/City')
 
-router.get('/people', function (req, res) {
-    Person.find({}, function (err, people) {
-        res.send(people)
+router.get('/city', function (req, res) {
+    City.find({}, function (err, city) {
+        res.send(city)
     })
 })
 

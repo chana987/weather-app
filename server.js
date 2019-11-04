@@ -1,14 +1,12 @@
-// Server setup
 const express = require("express")
 const path = require("path")
 const app = express()
 const api = require("./server/routes/api")
 const port = process.env.SERVER_PORT || 3000
 const bodyParser = require("body-parser")
-
-// Mongoose setup
 const mongoose = require("mongoose")
-mongoose.connect("mongodb://localhost/booksDB", {
+
+mongoose.connect("mongodb://localhost/citiesDB", {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
 	useFindAndModify: false
