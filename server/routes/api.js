@@ -1,8 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const requestPromise = require('request-promise')
-const config = require('../config.js')
-const weatherApiKey = config.WEATHER_KEY
+// const config = require('../config.js')
+// const weatherApiKey = config.WEATHER_KEY
 
 const City = require('../models/City')
 
