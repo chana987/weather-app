@@ -1,0 +1,25 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background: rgb(241, 219, 170);
+	padding: 4px;
+}
+
+.container {
+	background: #ffce00;
+	border-radius: 4px;
+	min-height: 99vh;
+}
+
+.searchbar {
+	padding: 5px;
+	background: #007849;
+}
+
+.city {
+    background: #0375b4;
+}
