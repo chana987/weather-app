@@ -4,8 +4,8 @@ const requestPromise = require('request-promise')
 const xml2js = require('xml2js')
 var parser = new xml2js.Parser
 const moment = require('moment')
-const config = require('../config.js')
-const weatherApiKey = config.WEATHER_KEY || API_KEY
+// const config = require('../config.js')
+// const weatherApiKey = config.WEATHER_KEY
 
 const City = require('../models/City')
 
@@ -14,7 +14,7 @@ router.get('/sanity', function(req, res) {
 })
 
 router.get('/city/:cityName', function (req, res) {
-    requestPromise(`http://api.openweathermap.org/data/2.5/find?q=${req.params.cityName}&units=metric&mode=xml&APPID=${weatherApiKey}`)
+    requestPromise(`http://api.openweathermap.org/data/2.5/find?q=${req.params.cityName}&units=metric&mode=xml&APPID=d7af858ceec5dc3e62029c5cb42dc419`)
     .then(data => {
         let cityData
         parser.parseStringPromise(data)
