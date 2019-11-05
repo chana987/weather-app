@@ -7,7 +7,6 @@ const weatherApiKey = config.WEATHER_KEY
 const City = require('../models/City')
 
 router.get('/sanity', function(req, res) {
-    console.log("everything's fine")
     res.send("everything's fine")
 })
 
