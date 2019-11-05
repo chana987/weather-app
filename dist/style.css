@@ -5,7 +5,7 @@
 }
 
 body {
-	background: rgb(241, 219, 170);
+	background: #007849;
 	padding: 4px;
 }
 
@@ -13,13 +13,46 @@ body {
 	background: #ffce00;
 	border-radius: 4px;
 	min-height: 99vh;
+	padding: 5px;
 }
 
 .searchbar {
 	padding: 5px;
-	background: #007849;
+	background: #0375b4;
+	border-radius: 4px;
+	margin: 5px;
 }
 
 .city {
-    background: #0375b4;
+	display: grid;
+	grid-template-areas: "btns city city icon""btnd temp cond icon";
+	justify-items: center;
+	align-items: center;
+	background: #0375b4;
+	border-radius: 4px;
+	margin: 5px;
+}
+
+.save-city {
+	grid-area: btns;
+}
+
+.remove-city {
+	grid-area: btnd;
+}
+
+.city_name {
+	grid-area: city;
+}
+
+.city_temp {
+	grid-area: temp;
+}
+
+.city_cond {
+	grid-area: cond;
+}
+
+.city_icon {
+	grid-area: icon;
 }
