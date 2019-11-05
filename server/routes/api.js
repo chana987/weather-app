@@ -49,7 +49,6 @@ router.post('/city', async function(req, res) {
 })
 
 router.delete('/city', function(req, res) {
-    console.log(req.body.city)
     City.findOneAndDelete({
         name: req.body.city
     })

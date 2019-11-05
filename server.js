@@ -19,4 +19,4 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use("/", api)
 
-app.listen(process.env.SERVER_PORT || port, () => console.log(`Running server on port ${port}`))
+app.listen(process.env.PORT || port, () => console.log(`Running server on port ${port}`))

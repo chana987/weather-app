@@ -28,6 +28,7 @@ class TempManager {
     }
 
     removeCity(cityName) {
+        // remove from cityData
         $.ajax({
             method: 'delete',
             url: '/city',
