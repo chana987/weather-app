@@ -19,11 +19,18 @@ $(".find-city").on("click", function() {
 })
 
 $(".cities").on("click", ".save-city", function() {
-    let cityName = $(this).siblings(".city_name").text()
+    let cityName = $(this).closest(".city").find(".city_name").text()
     tempManager.saveCity(cityName)
 })
 
 $(".cities").on("click", ".remove-city", function() {
-    let cityName = $(this).siblings(".city_name").text()
+    let cityName = $(this).closest(".city").find(".city_name").text()
     tempManager.removeCity(cityName)
+    renderer.renderData(tempManager.cityData)
+})
+
+$(".cities").on("click", ".update-city", function() {
+    let cityName = $(this).closest(".city").find(".city_name").text()
+    tempManager.updateCity(cityName)
+    renderer.renderData(tempManager.cityData)
 })

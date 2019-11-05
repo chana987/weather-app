@@ -7,7 +7,8 @@ const citySchema = new Schema({
     temp: Number,
     country: String,
     condition: String,
-    icon: String
+    icon: String,
+    updatedAt: Date
 })
 
 const City = mongoose.model("city", citySchema)

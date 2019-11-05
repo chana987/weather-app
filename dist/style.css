@@ -1,16 +1,27 @@
+:root {
+	--color-primary: #6bbaa7;
+	--color-secondary: #fba100;
+	--color-tertiary: #6ca0e4;
+	--color-grey: #8692a1;
+	--color-white: #e8eeed;
+	--color-black: #06241f;
+}
+
 * {
 	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
+	font-family: "Nunito", sans-serif;
 }
 
 body {
-	background: #007849;
+	background: var(--color-primary);
 	padding: 4px;
+	color: var(--color-black);
 }
 
 .container {
-	background: #ffce00;
+	background: var(--color-white);
 	border-radius: 4px;
 	min-height: 99vh;
 	padding: 5px;
@@ -18,41 +29,89 @@ body {
 
 .searchbar {
 	padding: 5px;
-	background: #0375b4;
+	background: var(--color-secondary);
 	border-radius: 4px;
-	margin: 5px;
+	margin-bottom: 5px;
+	display: flex;
+	flex-wrap: nowrap;
+	align-items: stretch;
+}
+
+.city-input,
+.city-input:focus,
+.find-city,
+.find-city:focus {
+	border: none;
+	outline: none;
+	background: var(--color-white);
+	border-radius: 4px;
+	padding: 3px;
+}
+
+.city-input {
+	width: 65%;
+	margin-right: 3px;
+}
+
+.find-city {
+	flex: 1;
+	cursor: pointer;
 }
 
 .city {
 	display: grid;
-	grid-template-areas: "btns city city icon""btnd temp cond icon";
-	justify-items: center;
+	grid-template-areas: "btns name icon" "btns temp icon""btns date icon";
+	grid-template-rows: repeat(3, 1fr);
+	grid-template-columns: 15% 1fr 30%;
+	justify-items: left;
 	align-items: center;
-	background: #0375b4;
+	background: var(--color-tertiary);
 	border-radius: 4px;
-	margin: 5px;
+	margin-bottom: 5px;
 }
 
-.save-city {
+.city_db {
+	justify-self: center;
 	grid-area: btns;
+	display: flex;
+	flex-direction: column;
 }
 
+.save-city,
 .remove-city {
-	grid-area: btnd;
+	background: none;
+	border: none;
+	outline: none;
+	cursor: pointer;
 }
 
 .city_name {
-	grid-area: city;
+	grid-area: name;
 }
 
-.city_temp {
+.city_weather {
 	grid-area: temp;
-}
-
-.city_cond {
-	grid-area: cond;
+	display: flex;
 }
 
 .city_icon {
 	grid-area: icon;
+}
+
+.city_update {
+	grid-area: date;
+	display: flex;
+}
+
+.update-city,
+.update-city:focus {
+	background: none;
+	border: none;
+	outline: none;
+	cursor: pointer;
+}
+
+.fa-redo-alt,
+.fa-redo-alt::before {
+	color: var(--color-black);
 }

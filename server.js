@@ -8,8 +8,8 @@ const mongoose = require("mongoose")
 
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/weatherDB", {
 	useNewUrlParser: true,
-	// useUnifiedTopology: true,
-	// useFindAndModify: false
+	useUnifiedTopology: true,
+	useFindAndModify: false
 })
 
 app.use(express.static(path.join(__dirname, "dist")))

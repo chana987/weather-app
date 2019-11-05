@@ -9,16 +9,12 @@ class TempManager {
     }
 
     async getCityData(cityName) {
-        let data = await $.get(`/city/${cityName}`)
         try {
-            if (data instanceof Error) {
-                throw new Error(e)
-            } else {
-                let city = { ...data }
-                this.cityData.push(city)
-            }
+            let data = await $.get(`/city/${cityName}`)
+            let city = { ...data }
+            this.cityData.push(city)
         } catch(e) {
-            console.log(e)
+            alert(e)
         }  
     }
 
@@ -28,12 +24,24 @@ class TempManager {
     }
 
     removeCity(cityName) {
-        // remove from cityData
+        let cityIndex = this.cityData.findIndex(c => c.name === cityName)
+        this.cityData.splice(cityIndex, 1)
         $.ajax({
             method: 'delete',
             url: '/city',
             data: { city: cityName },
             success: () => console.log(`Removed ${cityName}`),
+            error: (e) => console.log(e)
+        })
+    }
+
+    updateCity(cityName) {
+        let cityIndex = this.cityData.findIndex(c => c.name === cityName)
+        $.ajax({
+            method: 'put',
+            url: '/city',
+            data: { cityName: cityName },
+            success: (data) => this.cityData[cityIndex] = { ...data },
             error: (e) => console.log(e)
         })
     }
