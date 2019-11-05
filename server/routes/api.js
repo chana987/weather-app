@@ -6,6 +6,11 @@ const weatherApiKey = config.WEATHER_KEY
 
 const City = require('../models/City')
 
+router.get('/sanity', function(req, res) {
+    console.log("everything's fine")
+    res.send("everything's fine")
+})
+
 router.get('/city/:cityName', async function (req, res) {
     let data = await requestPromise(`http://api.openweathermap.org/data/2.5/find?q=${req.params.cityName}&units=metric&APPID=d7af858ceec5dc3e62029c5cb42dc419`)
     let cityData = JSON.parse(data).list[0]
