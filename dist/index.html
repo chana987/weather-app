@@ -28,12 +28,15 @@
 			{{#each allCityData}}
 			<div class="city">
 				<div class="city_db">
-					<button class="save-city"><i class="fas fa-plus-circle"></i></button>
+					{{#if saved}}
 					<button class="remove-city"><i class="fas fa-minus-circle"></i></button>
+					{{else}}
+					<button class="save-city"><i class="fas fa-plus-circle"></i></button>
+					{{/if}}
 				</div>
 				<p class="city_name">{{name}}</p>
 				<div class="city_weather">
-					<p class="city_temp">{{temp}}&#8451;</p>
+					<p class="city_temp">{{temp}}&#176;</p>
 					<p class="city_cond">{{condition}}</p>
 				</div>				
 				<img src="http://openweathermap.org/img/wn/{{icon}}@2x.png" alt="" class="city_icon">
@@ -47,6 +50,8 @@
 
 		<script src="./jquery/dist/jquery.js"></script>
 		<script src="./handlebars/dist/handlebars.js"></script>
+		<script src="moment/moment.js"></script>
+		<script>moment().format()</script>
 		<script src="TempManager.js"></script>
 		<script src="Renderer.js"></script>
 		<script src="main.js"></script>

@@ -5,6 +5,10 @@ class TempManager {
 
     async getDataFromDB() {
         const data = await $.get('/cities')
+        data.forEach(c => {
+            c.saved = true
+            c.updatedAt = `Last updated: ${moment(c.updatedAt).format('ddd, HH:mm')}`
+        })
         this.cityData = data
     }
 
@@ -14,13 +18,18 @@ class TempManager {
             let city = { ...data }
             this.cityData.push(city)
         } catch(e) {
-            alert(e)
+            console.log(e.message)
         }  
     }
 
-    saveCity(cityName) {
-        let city = this.cityData.find(c => c.name === cityName)
-        $.post('/city', city, () => console.log(`Saved ${cityName}`))
+    async saveCity(cityName) {
+        let cityIndex = this.cityData.findIndex(c => c.name === cityName)
+        try {
+            await $.post('/city', this.cityData[cityIndex])
+            this.cityData[cityIndex].saved = true
+        } catch(e) {
+            console.log(e)
+        }
     }
 
     removeCity(cityName) {
@@ -37,11 +46,12 @@ class TempManager {
 
     updateCity(cityName) {
         let cityIndex = this.cityData.findIndex(c => c.name === cityName)
+        let isSaved = this.cityData[cityIndex].saved
         $.ajax({
             method: 'put',
             url: '/city',
             data: { cityName: cityName },
-            success: (data) => this.cityData[cityIndex] = { ...data },
+            success: (data) => Object.assign(this.cityData[cityIndex], data),
             error: (e) => console.log(e)
         })
     }

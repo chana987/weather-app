@@ -94,6 +94,10 @@ body {
 	display: flex;
 }
 
+.city_temp {
+	padding-right: 7px;
+}
+
 .city_icon {
 	grid-area: icon;
 }
@@ -114,4 +118,5 @@ body {
 .fa-redo-alt,
 .fa-redo-alt::before {
 	color: var(--color-black);
+	padding-right: 7px;
 }

@@ -5,13 +5,13 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "nodemon server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
-    "font-awesome": "^4.7.0",
+    "@fortawesome/fontawesome-free": "^5.11.2",
     "handlebars": "^4.5.1",
     "jquery": "^3.4.1",
     "moment": "^2.24.0",
@@ -22,6 +22,5 @@
     "xml2js": "^0.4.22"
   },
   "devDependencies": {
-    "@fortawesome/fontawesome-free": "^5.11.2"
   }
 }

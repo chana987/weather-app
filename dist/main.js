@@ -18,9 +18,10 @@ $(".find-city").on("click", function() {
     handleSearch(cityName)
 })
 
-$(".cities").on("click", ".save-city", function() {
+$(".cities").on("click", ".save-city", async function() {
     let cityName = $(this).closest(".city").find(".city_name").text()
-    tempManager.saveCity(cityName)
+    await tempManager.saveCity(cityName)
+    renderer.renderData(tempManager.cityData)
 })
 
 $(".cities").on("click", ".remove-city", function() {

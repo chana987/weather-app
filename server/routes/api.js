@@ -32,7 +32,10 @@ router.get('/city/:cityName', function (req, res) {
             }
             res.send(city)
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+            console.log(err)
+            res.send(err)
+        })
     })
     .catch(err => {
         let error = { ...err, body: "We can't seem to find this city"}
@@ -48,19 +51,14 @@ router.get('/cities', function (req, res) {
     })
 })
 
-router.post('/city', async function(req, res) {
+router.post('/city', function(req, res) {
     try {
-        if (req.body.name) {
-            let city = new City( req.body )
-            city.save()
-            .then( res.send(`${city.name} added to database`) )
-        } else {
-            throw new Error("didn't work")
-        }
+        let city = new City({ ...req.body })
+        city.save()
+        .then( res.send(`${city.name} added to database`) )
     } catch(e) {
         res.send(e)
-    }
-    
+    }   
 })
 
 router.delete('/city', function(req, res) {
@@ -77,19 +75,20 @@ router.delete('/city', function(req, res) {
 })
 
 router.put('/city', function(req, res) {
-    requestPromise(`http://api.openweathermap.org/data/2.5/find?q=${req.body.cityName}&units=metric&mode=xml&APPID=${weatherApiKey}`)
+    requestPromise(`http://api.openweathermap.org/data/2.5/find?q=${req.body.cityName}&units=metric&mode=xml&APPID=d7af858ceec5dc3e62029c5cb42dc419`)
     .then(data => {
         parser.parseStringPromise(data)
         .then(result => {
             let temp = result.cities.list[0].item[0].temperature[0].$.value
             let condition = result.cities.list[0].item[0].weather[0].$.value
+            let icon = result.cities.list[0].item[0].weather[0].$.icon
             let updatedAt = result.cities.list[0].item[0].lastupdate[0].$.value
 
             City.findOneAndUpdate({
                 "name": req.body.city
             },
             {
-                $set: { "temp": temp, "condition": condition, "updatedAt": updatedAt } 
+                $set: { "temp": temp, "condition": condition, "icon": icon, "updatedAt": updatedAt } 
             })
             .exec(city => res.send(city))
         })
