@@ -3,23 +3,15 @@ const router = express.Router()
 const requestPromise = require('request-promise')
 const xml2js = require('xml2js')
 var parser = new xml2js.Parser
-const moment = require('moment')
-// const config = require('../config.js')
-// const weatherApiKey = config.WEATHER_KEY
 
 const City = require('../models/City')
 
-router.get('/sanity', function(req, res) {
-    res.send("everything's fine")
-})
-
-router.get('/city/:cityName', function (req, res) {
-    requestPromise(`http://api.openweathermap.org/data/2.5/find?q=${req.params.cityName}&units=metric&mode=xml&APPID=d7af858ceec5dc3e62029c5cb42dc419`)
+router.get('/city/:cityName/:country', function (req, res) {
+    requestPromise(`http://api.openweathermap.org/data/2.5/find?q=${req.body.cityName}&units=metric&mode=xml&APPID=d7af858ceec5dc3e62029c5cb42dc419`)
     .then(data => {
-        let cityData
         parser.parseStringPromise(data)
         .then(result => {
-            cityData = result.cities.list[0].item[0]
+            let cityData = result.cities.list[0].item[0]
 
             let city = { 
                 id: cityData.city[0].$.id,
@@ -38,40 +30,39 @@ router.get('/city/:cityName', function (req, res) {
         })
     })
     .catch(err => {
-        let error = { ...err, body: "We can't seem to find this city"}
-        res.send(error)
+        console.log(err)
+        res.send(err)
     })
 })
 
 router.get('/cities', function (req, res) {
     City.find({})
-    .then(data => {
-        data.updatedAt = moment(data.updatedAt).format()
-        res.send(data)
-    })
+    .then(data => res.send(data))
+    // .catch(err => {
+    //     console.log(err)
+    //     res.send(err)
+    // })
 })
 
 router.post('/city', function(req, res) {
-    try {
-        let city = new City({ ...req.body })
-        city.save()
-        .then( res.send(`${city.name} added to database`) )
-    } catch(e) {
-        res.send(e)
-    }   
+    let city = new City({ ...req.body })
+    city.save()
+    .then( res.send({ success: `${city.name} added to database` }))
+    .catch(err => {
+        console.log(err)
+        res.send(err)
+    })
 })
 
 router.delete('/city', function(req, res) {
     City.findOneAndDelete({
         name: req.body.city
     })
-    .then(res.end())
-    // try {
-        
-    //     // throw new Error("This city is not saved")
-    // } catch(e) {
-    //     res.send(e)
-    // }  
+    .then(res.send({ success: `${city.name} removed from database` }))
+    .catch(err => {
+        console.log(err)
+        res.send(err)
+    })
 })
 
 router.put('/city', function(req, res) {
@@ -79,10 +70,12 @@ router.put('/city', function(req, res) {
     .then(data => {
         parser.parseStringPromise(data)
         .then(result => {
-            let temp = result.cities.list[0].item[0].temperature[0].$.value
-            let condition = result.cities.list[0].item[0].weather[0].$.value
-            let icon = result.cities.list[0].item[0].weather[0].$.icon
-            let updatedAt = result.cities.list[0].item[0].lastupdate[0].$.value
+            let cityData = result.cities.list[0].item[0]
+
+            let temp = cityData.temperature[0].$.value
+            let condition = cityData.weather[0].$.value
+            let icon = cityData.weather[0].$.icon
+            let updatedAt = cityData.lastupdate[0].$.value
 
             City.findOneAndUpdate({
                 "name": req.body.city
@@ -92,9 +85,16 @@ router.put('/city', function(req, res) {
             })
             .exec(city => res.send(city))
         })
+        .catch(err => {
+            console.log(err)
+            res.send(err)
+        })
     })
-    .catch(err => console.log(err.message))
+    .catch(err => {
+        console.log(err)
+        res.send(err)
+    })
 })
-    
 
 module.exports = router
+

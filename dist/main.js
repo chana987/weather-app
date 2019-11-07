@@ -2,13 +2,27 @@ const tempManager = new TempManager
 const renderer = new Renderer
 
 const loadPage = async function() {
-    await tempManager.getDataFromDB()
-    renderer.renderData(tempManager.cityData)
+    try {
+        await tempManager.getDataFromDB()
+        if (false) {
+            throw new Error("empty")
+        } else {
+            renderer.renderData(tempManager.cityData)
+        }
+    }
+    catch(err) {
+        console.log(err)
+    }
 }
-loadPage()
 
 const handleSearch = async function(cityName) {
     await tempManager.getCityData(cityName)
+    renderer.renderData(tempManager.cityData)
+}
+
+const changeCityStatus = async function(func) {
+    let cityName = $(this).closest(".city").find(".city_name").text()
+    await tempManager.func(cityName)
     renderer.renderData(tempManager.cityData)
 }
 
@@ -19,19 +33,15 @@ $(".find-city").on("click", function() {
 })
 
 $(".cities").on("click", ".save-city", async function() {
-    let cityName = $(this).closest(".city").find(".city_name").text()
-    await tempManager.saveCity(cityName)
-    renderer.renderData(tempManager.cityData)
+    changeCityStatus(saveCity)
 })
 
 $(".cities").on("click", ".remove-city", function() {
-    let cityName = $(this).closest(".city").find(".city_name").text()
-    tempManager.removeCity(cityName)
-    renderer.renderData(tempManager.cityData)
+    changeCityStatus(removeCity)
 })
 
 $(".cities").on("click", ".update-city", function() {
-    let cityName = $(this).closest(".city").find(".city_name").text()
-    tempManager.updateCity(cityName)
-    renderer.renderData(tempManager.cityData)
+    changeCityStatus(updateCity)
 })
+
+loadPage()
