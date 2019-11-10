@@ -21,6 +21,7 @@
 				/>
 				<button type="submit" class="find-city">Find</button>
 			</div>
+			<div class="message"></div>
 			<div class="cities"></div>
 		</div>
 
@@ -34,15 +35,15 @@
 					<button class="save-city"><i class="fas fa-plus-circle"></i></button>
 					{{/if}}
 				</div>
-				<p class="city_name">{{name}}</p>
+				<p class="city_name" data-id="{{id}}">{{name}}</p>
 				<div class="city_weather">
 					<p class="city_temp">{{temp}}&#176;</p>
 					<p class="city_cond">{{condition}}</p>
 				</div>				
 				<img src="http://openweathermap.org/img/wn/{{icon}}@2x.png" alt="" class="city_icon">
 				<div class="city_update">
-					<button class="update-city"><i class="fas fa-redo-alt"></i></button>
-					<p class="last-updated">Last updated: {{updatedAt}}</p>
+					<button class="update-city"><i class="fas fa-sync-alt"></i></button>
+					<p class="last-updated">Last updated: {{formattedTime}}</p>
 				</div>
 			</div>
 			{{/each}}
