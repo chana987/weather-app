@@ -102,28 +102,3 @@ router.put('/city', function(req, res) {
 })
 
 module.exports = router
-
-// .then(data => {
-//     parser.parseStringPromise(data)
-//     .then(result => {
-//         let cityData = result.cities.list[0].item[0]
-
-//         let city = { 
-//             id: cityData.city[0].$.id,
-//             name: cityData.city[0].$.name,
-//             country: cityData.city[0].country[0],
-//             temp: cityData.temperature[0].$.value,
-//             condition: cityData.weather[0].$.value,
-//             icon: cityData.weather[0].$.icon,
-//             updatedAt: cityData.lastupdate[0].$.value
-//         }
-//         res.send(city)
-//     })
-//     .catch(err => {
-//         res.send(err)
-//     })
-// })
-// .catch(err => {
-//     res.send(err)
-// })
-

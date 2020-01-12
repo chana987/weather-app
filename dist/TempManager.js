@@ -3,6 +3,10 @@ class TempManager {
 		this.cityData = []
 	}
 
+	getCities() {
+		return this.cityData
+	}
+
 	async getDataFromDB() {
 		const data = await $.get("/cities")
 		if (data.length > 0) {
@@ -45,10 +49,10 @@ class TempManager {
 	}
 
 	async saveCity(cityId) {
-        let city = this.cityData.find(c => c.id == cityId)
+		let city = this.cityData.find(c => c.id == cityId)
         try {
 			await $.post("/city", city, () => {})
-            city.saved = true
+			city.saved = true
             if (err) {
 				throw new Error("Already saved")
 			} 
@@ -73,6 +77,7 @@ class TempManager {
 
 	async updateCity(cityId) {
 		let city = this.cityData.find(c => c.id === cityId)
+		console.log('updating ' + city.name)
 		if (city.saved) {
 			$.ajax({
 				method: "put",
@@ -89,6 +94,13 @@ class TempManager {
 		} else {
 			let data = await $.get(`/city/${city}`)
 			Object.assign(city, data)
+		}
+	}
+
+	keepUpdated() {
+		console.log('3')
+		for (let city of this.cityData) {
+			this.updateCity(city.cityId)
 		}
 	}
 }

@@ -15,7 +15,9 @@ const loadPage = async function() {
     }
 }
 
-const handleSearch = async function(cityName) {
+const handleSearch = async function() {
+    let cityName = $(".city-input").val()
+    $(".city-input").val("")
     try {
         await tempManager.getCityData(cityName)
         renderer.renderData(tempManager.cityData)
@@ -25,9 +27,13 @@ const handleSearch = async function(cityName) {
 }
 
 $(".find-city").on("click", function() {
-    let cityName = $(".city-input").val()
-    $(".city-input").val("")
-    handleSearch(cityName)
+    handleSearch()
+})
+
+$(".city-input").on("keypress", function () {
+    if (event.which === 13) {
+        handleSearch()
+    }
 })
 
 $(".cities").on("click", ".save-city", async function() {
@@ -64,3 +70,5 @@ $(".cities").on("click", ".update-city", async function() {
 })
 
 loadPage()
+
+let interval = setInterval(tempManager.keepUpdated(), 10000)
