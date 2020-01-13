@@ -1,8 +1,8 @@
-#Weather-or-Not
+# Weather-or-Not
 
 Allows users to search for weather info by city name, and save favorites.
 
-##Installation
+## Installation
 
 Use npm to install Weather-or-Not
 ```bash
@@ -14,7 +14,7 @@ Run Mongo for local database
 mongod
 ```
 
-##Usage
+## Usage
 
 ![Image of app](/resources/screenshot.png?raw=true)
 
@@ -22,10 +22,10 @@ Type name of desired city, click 'Find' or press Enter.
 Click the + next to the city to save to DB. Click - to remove saved city.
 Refresh weather info with the refresh symbol.
 
-##Roadmap
+## Roadmap
 
 Further work on this project would include automatic refresh, solving the issue of multiple cities with the same name' and improving visuals.
 
-##Visit
+## Visit
 
 This app was deployed using [Heroku], at (https://weather-or-not-c.herokuapp.com/)
